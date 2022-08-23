@@ -1,2 +1,2 @@
 #!/bin/bash
-./pyt.py
+python3 pyt.py
