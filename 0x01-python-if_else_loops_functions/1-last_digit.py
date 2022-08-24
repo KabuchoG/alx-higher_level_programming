@@ -8,7 +8,7 @@ else:
     number = str(number)
     neg = number[-1]
     val = int(neg) * -1
-print(f"Last digit of {number} is {val}", end = ' ')
+print(f"Last digit of {number} is {val}", end=' ')
 if val > 5:
     print("and is greater than 5")
 elif val == 0:
