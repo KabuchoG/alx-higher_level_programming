@@ -1,8 +1,4 @@
 #!/usr/bin/python3
 def no_c(my_string):
-    for i in my_string:
-        if i == 'c':
-            i = ''
-        if i == 'C':
-            i = ''
+     my_string.strip('Cc')
     return my_string
