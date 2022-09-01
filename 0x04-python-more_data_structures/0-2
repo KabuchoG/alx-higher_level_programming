@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+def square_matrix_simple(matrix=[]):
+    res = []
+    for i in range(len(matrix)):
+        li = matrix[i]
+        for j in range(len(li)):
+            res.append(li[j] ** 2)
+    return res
