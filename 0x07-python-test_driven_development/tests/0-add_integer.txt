@@ -1,0 +1,14 @@
+Adds two integers
+>>> add_integer = __import__("0-add_integer").add_integer
+>>> add_integer(1)
+99
+>>> add_integer(20, 100)
+120
+>>> add_integer('j', 50)
+Traceback (most recent call last):
+	...
+TypeError: a must be an integer
+>>> add_integer(30, 'g')
+Traceback (most recent call last):
+	...
+TypeError: b must be an integer
