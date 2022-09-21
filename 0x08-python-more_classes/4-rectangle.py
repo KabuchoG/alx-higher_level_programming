@@ -76,6 +76,7 @@ class Rectangle:
         return string
 
     def __repr__(self):
-        """ Returns a string that can recreate the instance object when executed"""
+        """ Returns a string that can recreate the instance object when executed
+        """
 
-        return "{}".format(self.Rectangle)
+        return "Rectangle({}, {})".format(self.__width, self.__height)
