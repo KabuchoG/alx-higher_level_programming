@@ -70,7 +70,7 @@ class Rectangle:
         """Returns a printable representation of the class"""
 
         if self.__height == 0 or self.__width == 0:
-            return
+            return ""
         string = ""
         string += "\n".join("#" * self.__width for j in range(self.__height))
         return string
