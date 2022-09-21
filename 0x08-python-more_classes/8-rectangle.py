@@ -24,7 +24,7 @@ class Rectangle:
         if rect_2.area() < rect_1.area():
             return rect_1
         return rect_1
-    
+
     def __init__(self, width=0, height=0):
         """
         a reference to the instance itself
