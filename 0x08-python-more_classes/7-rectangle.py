@@ -76,7 +76,7 @@ class Rectangle:
         if self.__height == 0 or self.__width == 0:
             return ""
         string = ""
-        string += "\n".join(Rectangle.print_symbol * self.__width for j in range(self.__height))
+        string += "\n".join(str(Rectangle.print_symbol) * self.__width for j in range(self.__height)
         return string
 
     def __repr__(self):
