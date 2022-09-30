@@ -5,7 +5,7 @@ This module defines a rectangle and its width
 
 
 class Rectangle:
-    """ A class with widh of a rectangle
+    """ A class with width of a rectangle
     """
 
     def __init__(self, width=0, height=0):
@@ -50,7 +50,7 @@ class Rectangle:
 
         if type(value) is not int:
             raise TypeError("height must be an integer")
-        if value < 0:
+        if value <= 0:
             raise ValueError("height must be >= 0")
         self.__height = value
 
