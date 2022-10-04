@@ -100,21 +100,21 @@ class Rectangle(Base):
             print()
 
     def __str__(self):
-        """Overrides str to print a specific string representation of the objct
+        """Overrides str to print a specific string representation of the object
         """
 
         return "[{}] ({}) {}/{} - {}/{}".format(__class__.__name__, self.id, self.__x, self.__y, self.__width, self.__height)
 
     def update(self, *args):
         """assigns an argument to each attribute:
-1st argument should be the id attribute
-2nd argument should be the width attribute
-3rd argument should be the height attribute
-4th argument should be the x attribute
-5th argument should be the y attribute
-"""
+        1st argument should be the id attribute
+        2nd argument should be the width attribute
+        3rd argument should be the height attribute
+        4th argument should be the x attribute
+        5th argument should be the y attribute
+        """
+
         i = -1
-        args = list(args)
         arg = [id, self.__width, self.__height, self.__x, self.__y]
         for ag in args:
             i += 1
