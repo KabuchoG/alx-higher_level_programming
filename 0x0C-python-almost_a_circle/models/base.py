@@ -87,13 +87,13 @@ Otherwise, return the list represented by json_string
             with open(filename, 'r') as csvfile:
                 csv_reader = csv.reader(csvfile)
                 for args in csv_reader:
-                    if cls.__name__ is "Rectangle":
+                    if cls.__name__ == "Rectangle":
                         dictionary = {"id": int(args[0]),
                                       "width": int(args[1]),
                                       "height": int(args[2]),
                                       "x": int(args[3]),
                                       "y": int(args[4])}
-                    elif cls.__name__ is "Square":
+                    elif cls.__name__ == "Square":
                         dictionary = {"id": int(args[0]), "size": int(args[1]),
                                       "x": int(args[2]), "y": int(args[3])}
                     obj = cls.create(**dictionary)
