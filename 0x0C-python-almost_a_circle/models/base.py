@@ -1,120 +1,235 @@
 #!/usr/bin/python3
 """
-Contains tests for Base class
+This module contains the "Base" class
 """
 
-import unittest
-import inspect
-import pep8
+import csv
 import json
-from models import base
-Base = base.Base
+import turtle
 
 
-class TestBaseDocs(unittest.TestCase):
-    """Tests to check the documentation and style of Base class"""
+class Base:
+    """A base class"""
+    __nb_objects = 0
+
+    def __init__(self, id=None):
+        """Initialize the base class"""
+        if id is None:
+            Base.__nb_objects += 1
+            self.id = self.__nb_objects
+        else:
+            self.id = id
+
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """returns the JSON string representation of a list of dictionaries"""
+        if list_dictionaries is None:
+            list_dictionaries = []
+        return json.dumps(list_dictionaries)
+
+    @staticmethod
+    def from_json_string(json_string):
+        """returns the list of the JSON string representation json_string"""
+        if json_string is None or len(json_string) == 0:
+            return []
+        return json.loads(json_string)
+
     @classmethod
-    def setUpClass(cls):
-        """Set up for the doc tests"""
-        cls.base_funcs = inspect.getmembers(Base, inspect.isfunction)
+    def save_to_file(cls, list_objs):
+        """writes the JSON string representation of list_objs to a file"""
+        filename = cls.__name__ + ".json"
+        lo = []
+        if list_objs is not None:
+            for i in list_objs:
+                lo.append(cls.to_dictionary(i))
+        with open(filename, 'w') as f:
+            f.write(cls.to_json_string(lo))
 
-    def test_pep8_conformance_base(self):
-        """Test that models/base.py conforms to PEP8."""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/base.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    @classmethod
+    def create(cls, **dictionary):
+        """returns an instance with all attributes already set"""
+        if cls.__name__ is "Rectangle":
+            dummy = cls(1, 1)
+        elif cls.__name__ is "Square":
+            dummy = cls(1)
+        dummy.update(**dictionary)
+        return dummy
 
-    def test_pep8_conformance_test_base(self):
-        """Test that tests/test_models/test_base.py conforms to PEP8."""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['tests/test_models/test_base.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    @classmethod
+    def load_from_file(cls):
+        filename = cls.__name__ + ".json"
+        l = []
+        try:
+            with open(filename, 'r') as f:
+                l = cls.from_json_string(f.read())
+            for i, e in enumerate(l):
+                l[i] = cls.create(**l[i])
+        except:
+            pass
+        return l
 
-    def test_module_docstring(self):
-        """Tests for the module docstring"""
-        self.assertTrue(len(base.__doc__) >= 1)
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """serializes a list of Rectangles/Squares in csv"""
+        filename = cls.__name__ + ".csv"
+        with open(filename, 'w', newline='') as csvfile:
+            csv_writer = csv.writer(csvfile)
+            if cls.__name__ is "Rectangle":
+                for obj in list_objs:
+                    csv_writer.writerow([obj.id, obj.width, obj.height,
+                                         obj.x, obj.y])
+            elif cls.__name__ is "Square":
+                for obj in list_objs:
+                    csv_writer.writerow([obj.id, obj.size, obj.x, obj.y])
 
-    def test_class_docstring(self):
-        """Tests for the Base class docstring"""
-        self.assertTrue(len(Base.__doc__) >= 1)
+    @classmethod
+    def load_from_file_csv(cls):
+        """deserializes a list of Rectangles/Squares in csv"""
+        filename = cls.__name__ + ".csv"
+        l = []
+        try:
+            with open(filename, 'r') as csvfile:
+                csv_reader = csv.reader(csvfile)
+                for args in csv_reader:
+                    if cls.__name__ is "Rectangle":
+                        dictionary = {"id": int(args[0]),
+                                      "width": int(args[1]),
+                                      "height": int(args[2]),
+                                      "x": int(args[3]),
+                                      "y": int(args[4])}
+                    elif cls.__name__ is "Square":
+                        dictionary = {"id": int(args[0]), "size": int(args[1]),
+                                      "x": int(args[2]), "y": int(args[3])}
+                    obj = cls.create(**dictionary)
+                    l.append(obj)
+        except:
+            pass
+        return l
 
-    def test_func_docstrings(self):
-        """Tests for the presence of docstrings in all functions"""
-        for func in self.base_funcs:
-            self.assertTrue(len(func[1].__doc__) >= 1)
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """opens a window and draws all the Rectangles and Squares"""
+        screen_width = 620
+        padding = 10
+        row_width = padding
+        row_height = 0
+        screen_height = padding
+        color_list = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
+                      'violet']
+        color_size = len(color_list)
+        color_index = 0
+        for rect in list_rectangles:
+            potential_width = row_width + rect.width + rect.x + padding
+            if (row_width == padding or potential_width < screen_width):
+                row_width += rect.width + rect.x + padding
+                if (row_height < rect.height + rect.y):
+                    row_height = rect.height + rect.y
+            else:
+                screen_height += row_height + padding
+                row_width = rect.width + rect.x + padding * 2
+                row_height = rect.height + rect.y
 
+        for square in list_squares:
+            potential_width = row_width + square.size + square.x + padding
+            if (row_width == padding or potential_width < screen_width):
+                row_width += square.size + square.x + padding
+                if (row_height < square.size + square.y):
+                    row_height = square.size + square.y
+            else:
+                screen_height += row_height + padding
+                row_width = square.size + square.x + padding * 2
+                row_height = square.size + square.y
+        turtle.screensize(canvwidth=screen_width, canvheight=screen_height)
+        turtle.pu()
+        turtle.left(180)
+        turtle.forward(screen_width/2 - padding)
+        turtle.right(90)
+        turtle.forward(screen_height/2 - padding)
+        turtle.right(90)
+        row_width = padding
+        row_height = 0
+        for rect in list_rectangles:
+            potential_width = row_width + rect.width + rect.x + padding
+            if (row_width == padding or potential_width < screen_width):
+                row_width += rect.width + rect.x + padding
+                if (row_height < rect.height + rect.y):
+                    row_height = rect.height + rect.y
+            else:
+                turtle.pu()
+                turtle.left(180)
+                turtle.forward(row_width - padding)
+                turtle.left(90)
+                turtle.forward(row_height + padding)
+                turtle.left(90)
+                row_width = rect.width + rect.x + padding * 2
+                row_height = rect.height + rect.y
+            turtle.pd()
+            turtle.pencolor(color_list[color_index % color_size])
+            for _ in range(4):
+                turtle.forward(5)
+                turtle.back(5)
+                turtle.right(90)
+            turtle.pu()
+            turtle.forward(rect.x)
+            turtle.right(90)
+            turtle.forward(rect.y)
+            turtle.left(90)
+            turtle.pd()
+            turtle.pencolor('black')
+            turtle.fillcolor(color_list[color_index % color_size])
+            turtle.begin_fill()
+            for _ in range(2):
+                turtle.forward(rect.width)
+                turtle.right(90)
+                turtle.forward(rect.height)
+                turtle.right(90)
+            turtle.end_fill()
+            color_index += 1
+            turtle.pu()
+            turtle.forward(rect.width + padding)
+            turtle.left(90)
+            turtle.forward(rect.y)
+            turtle.right(90)
 
-class TestBase(unittest.TestCase):
-    """Tests to check functionality of Base class"""
-    def test_too_many_args(self):
-        """test too many args to init"""
-        with self.assertRaises(TypeError):
-            b = Base(1, 1)
+        for square in list_squares:
+            potential_width = row_width + square.size + square.x + padding
+            if (row_width == padding or potential_width < screen_width):
+                row_width += square.size + square.x + padding
+                if (row_height < square.size):
+                    row_height = square.size + square.y
+            else:
+                turtle.pu()
+                turtle.left(180)
+                turtle.forward(row_width - padding)
+                turtle.left(90)
+                turtle.forward(row_height + padding)
+                turtle.left(90)
+                row_width = square.size + square.x + padding * 2
+                row_height = square.size + square.y
+            turtle.pd()
+            turtle.pencolor(color_list[color_index % color_size])
+            for _ in range(4):
+                turtle.forward(5)
+                turtle.back(5)
+                turtle.right(90)
+            turtle.pu()
+            turtle.forward(square.x)
+            turtle.right(90)
+            turtle.forward(square.y)
+            turtle.left(90)
+            turtle.pd()
+            turtle.pencolor('black')
+            turtle.fillcolor(color_list[color_index % color_size])
+            turtle.begin_fill()
+            for _ in range(4):
+                turtle.forward(square.size)
+                turtle.right(90)
+            turtle.end_fill()
+            color_index += 1
+            turtle.pu()
+            turtle.forward(square.size + padding)
+            turtle.left(90)
+            turtle.forward(square.y)
+            turtle.right(90)
 
-    def test_no_id(self):
-        """Tests id as None"""
-        b = Base()
-        self.assertEqual(b.id, 1)
-
-    def test_id_set(self):
-        """Tests id as not None"""
-        b98 = Base(98)
-        self.assertEqual(b98.id, 98)
-
-    def test_no_id_after_set(self):
-        """Tests id as None after not None"""
-        b2 = Base()
-        self.assertEqual(b2.id, 2)
-
-    def test_nb_private(self):
-        """Tests nb_objects as a private instance attribute"""
-        b = Base(3)
-        with self.assertRaises(AttributeError):
-            print(b.nb_objects)
-        with self.assertRaises(AttributeError):
-            print(b.__nb_objects)
-
-    def test_to_json_string(self):
-        """Tests regular to json string"""
-        Base._Base__nb_objects = 0
-        d1 = {"id": 9, "width": 5, "height": 6, "x": 7, "y": 8}
-        d2 = {"id": 2, "width": 2, "height": 3, "x": 4, "y": 0}
-        json_s = Base.to_json_string([d1, d2])
-        self.assertTrue(type(json_s) is str)
-        d = json.loads(json_s)
-        self.assertEqual(d, [d1, d2])
-
-    def test_empty_to_json_string(self):
-        """Test for passing empty list/ None"""
-        json_s = Base.to_json_string([])
-        self.assertTrue(type(json_s) is str)
-        self.assertEqual(json_s, "[]")
-
-    def test_None_to_json_String(self):
-        json_s = Base.to_json_string(None)
-        self.assertTrue(type(json_s) is str)
-        self.assertEqual(json_s, "[]")
-
-    def test_from_json_string(self):
-        """Tests regular from_json_string"""
-        json_str = '[{"id": 9, "width": 5, "height": 6, "x": 7, "y": 8}, \
-{"id": 2, "width": 2, "height": 3, "x": 4, "y": 0}]'
-        json_l = Base.from_json_string(json_str)
-        self.assertTrue(type(json_l) is list)
-        self.assertEqual(len(json_l), 2)
-        self.assertTrue(type(json_l[0]) is dict)
-        self.assertTrue(type(json_l[1]) is dict)
-        self.assertEqual(json_l[0],
-                         {"id": 9, "width": 5, "height": 6, "x": 7, "y": 8})
-        self.assertEqual(json_l[1],
-                         {"id": 2, "width": 2, "height": 3, "x": 4, "y": 0})
-
-    def test_fjs_empty(self):
-        """Tests from_json_string with an empty string"""
-        self.assertEqual([], Base.from_json_string(""))
-
-    def test_fjs_None(self):
-        """Tests from_json_string with an empty string"""
-        self.assertEqual([], Base.from_json_string(None))
+        turtle.getscreen()._root.mainloop()
