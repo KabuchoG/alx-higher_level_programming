@@ -58,15 +58,15 @@ class Base:
     @classmethod
     def load_from_file(cls):
         filename = cls.__name__ + ".json"
-        l = []
+        temp = []
         try:
             with open(filename, 'r') as f:
-                l = cls.from_json_string(f.read())
-            for i, e in enumerate(l):
-                l[i] = cls.create(**l[i])
-        except:
+                temp = cls.from_json_string(f.read())
+            for i, e in enumerate(temp):
+                temp[i] = cls.create(**temp[i])
+        except Exception:
             pass
-        return l
+        return temp
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
@@ -86,7 +86,7 @@ class Base:
     def load_from_file_csv(cls):
         """deserializes a list of Rectangles/Squares in csv"""
         filename = cls.__name__ + ".csv"
-        l = []
+        temp = []
         try:
             with open(filename, 'r') as csvfile:
                 csv_reader = csv.reader(csvfile)
@@ -101,10 +101,10 @@ class Base:
                         dictionary = {"id": int(args[0]), "size": int(args[1]),
                                       "x": int(args[2]), "y": int(args[3])}
                     obj = cls.create(**dictionary)
-                    l.append(obj)
-        except:
+                    temp.append(obj)
+        except Exception:
             pass
-        return l
+        return temp
 
     @staticmethod
     def draw(list_rectangles, list_squares):
@@ -142,9 +142,9 @@ class Base:
         turtle.screensize(canvwidth=screen_width, canvheight=screen_height)
         turtle.pu()
         turtle.left(180)
-        turtle.forward(screen_width/2 - padding)
+        turtle.forward(screen_width / 2 - padding)
         turtle.right(90)
-        turtle.forward(screen_height/2 - padding)
+        turtle.forward(screen_height / 2 - padding)
         turtle.right(90)
         row_width = padding
         row_height = 0
