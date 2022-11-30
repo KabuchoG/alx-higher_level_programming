@@ -1,7 +1,7 @@
 #!/usr/bin/node
 function largest () {
   const numbers = process.argv;
-  let temp = 1;
+  let temp = 0;
   if (numbers.length < 3 || numbers.length === 3) {
     console.log(0);
   } else {
