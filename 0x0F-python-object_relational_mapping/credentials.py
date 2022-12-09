@@ -10,6 +10,6 @@ search_name = sys.argv[4]
 host = 'localhost'
 port = 3306
 
-connection = MySQLdb.connect(host=host, user=username,
-                       passwd=password, db=db_name, port=port)
+connection = MySQLdb.connect(host=host, user=username, passwd=password,
+                         db=db_name, port=port)
 cursor = connection.cursor()

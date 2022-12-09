@@ -8,8 +8,7 @@ from credentials import *
 def print_search():
     """prints a state by search name"""
 
-    sql = "SELECT * FROM states WHERE BINARY name = {} ORDER BY id ASC;".format(search_name)
-    cursor.execute(sql)
+    cursor.execute("SELECT * FROM states WHERE BINARY name = {} ORDER BY id ASC;").format(search_name)
     query = cursor.fetchall()
 
     for row in query:
