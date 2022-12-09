@@ -18,7 +18,6 @@ def list_all():
     curs = conn.cursor()
     curs.execute('SELECT * FROM states ORDER BY id ASC;')
     records = curs.fetchall()
-    
     for name in records:
         print(name)
 
