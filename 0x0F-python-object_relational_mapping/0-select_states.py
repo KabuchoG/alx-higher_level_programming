@@ -13,7 +13,7 @@ def list_all():
     host = "localhost"
     port = 3306
 
-    conn = MySQLdb.connect(host, port, user, password, db_name)
+    conn = MySQLdb.connect(host=host, port=port, user=user, passwd=password, db=db_name)
 
     curs = conn.cursor()
 
