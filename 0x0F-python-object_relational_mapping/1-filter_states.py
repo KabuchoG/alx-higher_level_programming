@@ -25,8 +25,8 @@ def filter_all():
     for item in record:
         n_list.append(item)
     if n_list is not None:
-        for state in n_list:
-            print(state)
+        for stat in n_list:
+            print(stat)
     cr.close()
     conn.close()
 
