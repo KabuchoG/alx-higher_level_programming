@@ -14,7 +14,8 @@ def print_search():
 
     for row in query:
         print(row)
-
+    cursor.close()
+    connection.close()
 
 if __name__ == "__main__":
     print_search()
