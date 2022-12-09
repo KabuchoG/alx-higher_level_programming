@@ -16,7 +16,8 @@ def list_all():
     conn = MySQLdb.connect(host=host, user=username, passwd=password,
                            db=db_name, port=port)
     curs = conn.cursor()
-    curs.execute('SELECT cities.id, cities.name, states.name FROM cities INNER JOIN states\
+    curs.execute('SELECT cities.id, cities.name,\
+        states.name FROM cities INNER JOIN states\
         ON cities.states_id = states.id ORDER BY cities.id ASC;')
     records = curs.fetchall()
     for name in records:
