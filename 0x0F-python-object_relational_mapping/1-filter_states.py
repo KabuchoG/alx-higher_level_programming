@@ -13,8 +13,8 @@ def filter_all():
     host = 'localhost'
     port = 3306
 
-    conn = MySQLdb.connect(host=host, port=port, user=username,
-                           passwd=password, db=db_name)
+    conn = MySQLdb.connect(host=host, user=username,
+                           passwd=password, db=db_name, port=port)
     cr = conn.cursor()
     cr.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC;")
 
