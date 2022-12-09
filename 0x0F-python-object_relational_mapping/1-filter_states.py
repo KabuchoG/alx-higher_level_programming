@@ -1,31 +1,31 @@
 #!/usr/bin/python3
-'''script for task 1'''
+"""Filter Select using MySQLdb"""
 
-import MySQLdb
 import sys
+import MySQLdb
 
 
-def list_N():
-    '''lists all states with a name that starts with N'''
+def filter_all():
+    """ filter names with N"""
     username = sys.argv[1]
     password = sys.argv[2]
     db_name = sys.argv[3]
     host = 'localhost'
     port = 3306
 
-    db = MySQLdb.connect(host=host, user=username, passwd=password,
-                         db=db_name, port=port)
-    cur = db.cursor()
-    cur.execute('SELECT * FROM states WHERE name regexp "^N.*" ' +
-                'ORDER BY states.id ASC')
-    result = cur.fetchall()
-    cur.close()
-    db.close()
-    if result:
-        for row in result:
-            if row[1][0] == "N":
-                print(row)
+    conn = MySQLdb.connect(host=host, user=username,
+                           passwd=password, db=db_name, port=port)
+    cr = conn.cursor()
+    cr.execute("SELECT id, name FROM states\
+        WHERE name LIKE BINARY 'N%';")
+
+    record = cr.fetchall()
+
+    for item in record:
+        print(item)
+    cr.close()
+    conn.close()
 
 
-if __name__ == "__main__":
-    list_N()
+if __name__ == "name":
+    filter_all()
