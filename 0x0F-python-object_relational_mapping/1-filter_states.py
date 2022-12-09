@@ -17,8 +17,7 @@ def filter_all():
                            passwd=password, db=db_name, port=port)
     cr = conn.cursor()
     cr.execute("SELECT id, name FROM states\
-        WHERE name LIKE BINARY 'N%'\
-        ORDER BY id ASC;")
+        WHERE name LIKE BINARY 'N%';")
 
     record = cr.fetchall()
 
