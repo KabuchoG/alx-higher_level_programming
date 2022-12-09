@@ -16,7 +16,9 @@ def filter_all():
     conn = MySQLdb.connect(host=host, user=username,
                            passwd=password, db=db_name, port=port)
     cr = conn.cursor()
-    cr.execute("SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id ASC;")
+    cr.execute("SELECT id, name FROM states\
+        WHERE name LIKE BINARY 'N%'\
+        ORDER BY id ASC;")
 
     record = cr.fetchall()
 
