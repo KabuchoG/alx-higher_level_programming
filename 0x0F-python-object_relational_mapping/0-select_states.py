@@ -13,11 +13,11 @@ def list_all():
     host = "localhost"
     port = 3306
 
-    conn = MySQLdb.connect(host=host, port=por user=user, pwd=password, db=db_name)
+    conn = MySQLdb.connect(host, port, user, password, db_name)
 
     curs = conn.cursor()
 
-    curs.execute('SELECT * FROM States ODER BY id')
+    curs.execute('SELECT * FROM States ORDER BY id')
 
     records = curs.fetchall()
 
@@ -26,5 +26,5 @@ def list_all():
     curs.close()
     conn.close()
 
-if __name__ == "main":
+if __name__ == "__main__":
     list_all()
