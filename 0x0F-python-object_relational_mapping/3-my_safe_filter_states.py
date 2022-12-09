@@ -33,3 +33,4 @@ def secure_fetch():
 
 if __name__ == '__main__':
     secure_fetch()
+    
