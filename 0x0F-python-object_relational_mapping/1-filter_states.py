@@ -20,9 +20,12 @@ def filter_all():
 
     record = cr.fetchall()
 
-    if record:
-        for item in record:
-            print(item)
+    n_list = []
+    for item in record:
+        n_list.append(item)
+    if n_list is not None:
+        for state in n_list:
+            print(state)
     cr.close()
     conn.close()
 
