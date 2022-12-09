@@ -1,31 +1,22 @@
 #!/usr/bin/python3
-"""Filter Select using MySQLdb"""
-
-import sys
-import MySQLdb
-
-
-def filter_all():
-    """ filter names with N"""
-    username = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    host = 'localhost'
-    port = 3306
-
-    conn = MySQLdb.connect(host=host, user=username,
-                           passwd=password, db=db_name, port=port)
-    cr = conn.cursor()
-    cr.execute("SELECT id, name FROM states\
-        WHERE name LIKE BINARY 'N%';")
-
-    record = cr.fetchall()
-
-    for item in record:
-        print(item)
-    cr.close()
+""""lists all states with a name starting with N (upper N)
+from the database hbtn_0e_0_usa
+"""
+if __name__ == "__main__":
+    import MySQLdb
+    import sys
+    conn = MySQLdb.connect(
+        host="localhost",
+        port=3306,
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3],
+        charset="utf8")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+    query_rows = cur.fetchall()
+    for row in query_rows:
+        print(row)
+    cur.close()
     conn.close()
-
-
-if __name__ == "name":
-    filter_all()
+    
