@@ -17,7 +17,7 @@ def list_all():
                            db=db_name, port=port)
     curs = conn.cursor()
     curs.execute('SELECT cities.id, cities.name, states.name FROM cities INNER JOIN states\
-        ON cities.id = states.id ORDER BY id ASC;')
+        ON cities.states_id = states.id ORDER BY cities.id ASC;')
     records = curs.fetchall()
     for name in records:
         print(name)
