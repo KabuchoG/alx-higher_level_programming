@@ -16,7 +16,7 @@ def list_all():
     conn = MySQLdb.connect(host=host, user=username, passwd=password,
                            db=db_name, port=port)
     curs = conn.cursor()
-    curs.execute('SELECT * FROM States ORDER BY id;')
+    curs.execute('SELECT * FROM States ORDER BY id ASC;')
     records = curs.fetchall()
     if records:
         for name in records:
