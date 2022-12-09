@@ -1,36 +1,46 @@
 #!/usr/bin/python3
-''' script for task 2
-    script should take 4 arguments: mysql username,
-    mysql password, database name and state name searched
-'''
-import sys
-import MySQLdb
+"""A module for a script that list all states starting with N"""
 
 
-def list_with_name():
-    ''' displays all values in the states table in hbtn db where name
-        matches the argument passed to the script
-    '''
-    username = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    state_name = sys.argv[4]
-    host = 'localhost'
-    port = 3306
+def query():
+    """Lists all states starting with N from database hbtn_0e_0_usa"""
 
-    db = MySQLdb.connect(host=host, user=username, passwd=password,
-                         db=db_name, port=port)
-    cur = db.cursor()
-    cur.execute("SELECT * FROM states WHERE BINARY name = \'{}\'\
-                 ORDER BY id ASC;".format(state_name))
-    result = cur.fetchall()
-    cur.close()
+    USER = argv[1]
+    PASS = argv[2]
+    DATABASE = argv[3]
+    STATE = argv[4]
+
+    db = MySQLdb.connect(host="localhost",
+                         port=3306,
+                         user=USER,
+                         passwd=PASS,
+                         database=DATABASE)
+    cursor = db.cursor()
+    sql = "SELECT id, name\
+            FROM states\
+            WHERE BINARY name='{}'\
+            ORDER BY id".format(STATE)
+    cursor.execute(sql)
+    query = cursor.fetchall()
+
+    my_list = []
+    for state in query:
+        my_list.append(state)
+
+    cursor.close()
     db.close()
 
-    if result:
-        for row in result:
-            print(row)
+    return my_list
 
 
-if __name__ == '__main__':
-    list_with_name()
+def main():
+    """Print all states starting with N"""
+    my_list = query()
+    for state in my_list:
+        print(state)
+
+
+if __name__ == "__main__":
+    import MySQLdb
+    from sys import argv
+    main()
