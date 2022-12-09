@@ -1,33 +1,36 @@
 #!/usr/bin/python3
-"""displays all values in the states table of hbtn_0e_0_usa
-where name matches the argument.
-"""
-
+''' script for task 2
+    script should take 4 arguments: mysql username,
+    mysql password, database name and state name searched
+'''
 import sys
 import MySQLdb
 
-def print_search():
-    """prints a state by search name"""
+
+def list_with_name():
+    ''' displays all values in the states table in hbtn db where name
+        matches the argument passed to the script
+    '''
     username = sys.argv[1]
     password = sys.argv[2]
     db_name = sys.argv[3]
-    search_name = sys.argv[4]
+    state_name = sys.argv[4]
     host = 'localhost'
     port = 3306
 
-    connection = MySQLdb.connect(host=host, user=username, passwd=password,
+    db = MySQLdb.connect(host=host, user=username, passwd=password,
                          db=db_name, port=port)
+    cur = db.cursor()
+    cur.execute(('SELECT * FROM states WHERE BINARY name = \'{}\'\
+                 ORDER BY id ASC;').format(state_name))
+    result = cur.fetchall()
+    cur.close()
+    db.close()
 
-    cursor = connection.cursor()
+    if result:
+        for row in result:
+            print(row)
 
-    cursor.execute("SELECT * FROM states WHERE BINARY name = \"{}\" ORDER BY id ASC;").format(search_name)
-    query = cursor.fetchall()
 
-    for row in query:
-        print(row)
-    cursor.close()
-    connection.close()
-
-if __name__ == "__main__":
-    print_search()
-    
+if __name__ == '__main__':
+    list_with_name()
