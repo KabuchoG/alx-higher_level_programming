@@ -1,3 +1,3 @@
 #!/bin/bash
-# Pst Json
+# Post Json
 curl -s -X POST -d "${2}" "${1}"
