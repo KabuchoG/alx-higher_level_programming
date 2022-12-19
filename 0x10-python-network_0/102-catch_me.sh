@@ -1,3 +1,3 @@
 #!/bin/bash
 # send GET the body
-curl -s -I "You got me!" 0.0.0.0:5000/catch_me
+curl -sL 0.0.0.0:5000/catch_me_3 -X PUT -H "Origin:HolbertonSchool"
