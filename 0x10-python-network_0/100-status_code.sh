@@ -1,3 +1,3 @@
 #!/bin/bash
 # print the status code only
-curl -s -i "${1}"
+curl -so /dev/null -w "%{http_code}" "$1"
