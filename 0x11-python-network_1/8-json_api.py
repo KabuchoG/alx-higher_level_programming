@@ -9,8 +9,8 @@ if __name__ == "__main__":
     if sys.argv[1]:
         let['q'] = sys.argv[1]
     res = requests.post('http://0.0.0.0:5000/search_user', data=let)
-    response = res.json
     try:
+        response = res.json
         if response:
             print("[{}] {}".format(response.get('id'), response.get('name')))
         else:
