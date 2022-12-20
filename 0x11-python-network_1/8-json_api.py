@@ -7,7 +7,7 @@ if __name__ == "__main__":
     q = ""
     if sys.argv[1]:
         q = sys.argv
-    res = requests.post('http://0.0.0.0:5000/search_user', json=q)
+    res = requests.post('http://0.0.0.0:5000/search_user', q)
     response = res.json
     try:
         if response:
