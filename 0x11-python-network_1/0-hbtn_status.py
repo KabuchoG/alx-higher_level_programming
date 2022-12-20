@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Fetches a web resource"""
+"""Fetches a web resource."""
 
 if __name__ == "__main__":
 
