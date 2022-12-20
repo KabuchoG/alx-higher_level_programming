@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
     val = {"email": argv[2]}
     data = parse.urlencode(val)
-    data.encode('ascii')
+    data = data.encode('ascii')
     req = request.Request(argv[1], data)
     with request.urlopen(req) as response:
         body = response.read()
