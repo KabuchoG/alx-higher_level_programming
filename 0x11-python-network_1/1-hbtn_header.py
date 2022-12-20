@@ -8,5 +8,5 @@ if __name__ == "__main__":
     headers = 'X-Request-Id'
     fetched = request.Request(argv[1])
     with request.urlopen(fetched) as re:
-        res = re.read()
-    print(dict(res).get(headers))
+        res = dict(re).read()
+    print(res.get(headers))
