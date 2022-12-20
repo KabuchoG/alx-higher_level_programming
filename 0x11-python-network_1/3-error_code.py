@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""POST data"""
+"""Handle eXCEPTIONS"""
 
 if __name__ == "__main__":
     from urllib import parse, request, error
@@ -12,4 +12,4 @@ if __name__ == "__main__":
         print(body.decode("utf-8"))
     except error.HTTPError as e:
         print("Error code: {}".format(e.code))
-
+   
