@@ -8,5 +8,5 @@ if __name__ == "__main__":
     try:
         res = requests.get(argv[1])
         print(res.text)
-    except requests.exceptions as e:
+    except requests.exceptions.RequestException as e:
         print("Error code: {}".format(res.status_code))
