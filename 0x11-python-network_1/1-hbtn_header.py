@@ -6,7 +6,7 @@ if __name__ == "__main__":
     from sys import argv
 
     headers = 'X-Request-Id'
-    fetched = request.Request(argv[1], headers)
+    fetched = request.Request(argv[1])
     with request.urlopen(fetched) as re:
-        res = re.read()
-    print(res)
+        res = dict(re.read())
+    print(res.get(headers))
