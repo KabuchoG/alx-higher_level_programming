@@ -9,6 +9,6 @@ if __name__ == "__main__":
     with request.urlopen(res) as response:
         result = response.read()
     print("Body response:")
-    print(" - type: {}".format(type(response)))
-    print(" - content: {}".format(response))
-    print(" - utf8: {}".format(response.decode("utf-8")))
+    print(" - type: {}".format(type(result)))
+    print(" - content: {}".format(result))
+    print(" - utf8 content: {}".format(result.decode("utf-8")))
