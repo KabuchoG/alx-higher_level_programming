@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""make use of command line arguments"""
+"""make use of command line arguments to supply url and email"""
 
 if __name__ == "__main__":
     import requests
