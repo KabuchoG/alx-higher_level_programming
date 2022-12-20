@@ -8,4 +8,3 @@ if __name__ == "__main__":
     res = requests.get(argv[1])
     response = res.headers
     print(response.get('X-Request-Id'))
-    
