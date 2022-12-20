@@ -4,10 +4,11 @@
 if __name__ == "__main__":
     import sys, requests
 
-    q = ""
+    let = {}
+    let['q'] = ""
     if sys.argv[1]:
-        q = sys.argv
-    res = requests.post('http://0.0.0.0:5000/search_user', q)
+        let['q'] = sys.argv[1]
+    res = requests.post('http://0.0.0.0:5000/search_user', data=let)
     response = res.json
     try:
         if response:
