@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 The first argument will be your username
-The second argument will be your password 
+The second argument will be your password
 (in your case, a personal access token as password)
 """
 
